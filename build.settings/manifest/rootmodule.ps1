@@ -1,0 +1,1 @@
+"{0}.psm1" -f $buildArgs.modulename
