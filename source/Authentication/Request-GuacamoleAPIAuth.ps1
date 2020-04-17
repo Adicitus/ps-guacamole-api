@@ -1,15 +1,15 @@
 function Request-GuacamoleAPIAuth {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, ParameterSetName="AuthObject")]
+        [Parameter(Mandatory=$true, ParameterSetName="AuthObject", Position=1)]
         [PSCustomObject]$AuthObject,
-        [Parameter(Mandatory=$true, ParameterSetName="Params")]
+        [Parameter(Mandatory=$true, ParameterSetName="Params", Position=1)]
         [string]$Hostname,
-        [Parameter(Mandatory=$true, ParameterSetName="Params")]
+        [Parameter(Mandatory=$true, ParameterSetName="Params", Position=2)]
         [pscredential]$Credential,
-        [Parameter(Mandatory=$false, ParameterSetName="Params")]
+        [Parameter(Mandatory=$false, ParameterSetName="Params", Position=3)]
         [String]$GuacamolePath="/",
-        [Parameter(Mandatory=$false, ParameterSetName="Params")]
+        [Parameter(Mandatory=$false, ParameterSetName="Params", Position=4)]
         [ValidateSet("https", "http")]
         [string]$Protocol="https"
     )
@@ -29,7 +29,7 @@ function Request-GuacamoleAPIAuth {
 
     $endPoint = "{0}api/tokens" -f $baseUri
 
-    Write-host $endpoint
+    Write-Debug $endpoint
 
     $headers = @{
         "Content-Type" = "application/x-www-form-urlencoded"
