@@ -65,10 +65,15 @@ function Invoke-GuacamoleAPIRequest {
             }
         }
         default {
-            [PSCustomObject]@{
-                Statuscode=$r.statuscode
-                Content=ConvertFrom-UnicodeEscapedString $r.Content | ConvertFrom-Json
+            $t = @{
+                Statuscode  = $r.statuscode
             }
+
+            if ($r.Content) {
+                $t.Content = ConvertFrom-UnicodeEscapedString $r.Content | ConvertFrom-Json
+            }
+
+            [PSCustomObject]$t
         }
     }
 
