@@ -12,6 +12,10 @@ function Restore-GuacamoleAPIAuth {
         Credential  = New-PSCredential -Username $p.Username -SecurePassword ($p.Password | ConvertTo-SecureString)
         DataSource  = $p.DataSource
         Token       = $p.Token | ConvertTo-SecureString
+        Hostname    = $p.Hostname
+        Path        = $p.Path
+        Protocol    = $p.Protocol
+        BaseURI     = $p.BaseURI
     }
 
 }

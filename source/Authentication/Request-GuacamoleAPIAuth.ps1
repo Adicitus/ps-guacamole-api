@@ -1,18 +1,34 @@
 function Request-GuacamoleAPIAuth {
     [CmdletBinding()]
     param(
+        [Parameter(Mandatory=$true, ParameterSetName="AuthObject")]
+        [PSCustomObject]$AuthObject,
+        [Parameter(Mandatory=$true, ParameterSetName="Params")]
         [string]$Hostname,
-        [String]$GuacamolePath="/",
+        [Parameter(Mandatory=$true, ParameterSetName="Params")]
         [pscredential]$Credential,
+        [Parameter(Mandatory=$false, ParameterSetName="Params")]
+        [String]$GuacamolePath="/",
+        [Parameter(Mandatory=$false, ParameterSetName="Params")]
         [ValidateSet("https", "http")]
         [string]$Protocol="https"
     )
 
-    $endpoint = if ($GuacamolePath -ne "/") {
-        "{0}://{1}/{2}/api/tokens" -f $Protocol, $Hostname, $GuacamolePath
-    } else {
-        "{0}://{1}/api/tokens" -f $Protocol, $Hostname
+    if ($PSCmdlet.ParameterSetName -eq "AuthObject") {
+        $Hostname       = $AuthObject.Hostname
+        $Credential     = $AuthObject.Credential
+        $GuacamolePath  = $AuthObject.Path
+        $Protocol       = $AuthObject.Protocol
     }
+
+    $baseUri = if ($GuacamolePath -ne "/") {
+        "{0}://{1}/{2}/" -f $Protocol, $Hostname, $GuacamolePath
+    } else {
+        "{0}://{1}/" -f $Protocol, $Hostname
+    }
+
+    $endPoint = "{0}api/tokens" -f $baseUri
+
     Write-host $endpoint
 
     $headers = @{
@@ -35,9 +51,13 @@ function Request-GuacamoleAPIAuth {
     switch ($r.statusCode) {
         200 {
             [PSCustomObject]@{
-                Token = ConvertTo-SecureString -String $r.Content.authToken -AsPlainText -Force
-                DataSource = $r.Content.DataSource
-                Credential = $Credential
+                Token       = ConvertTo-SecureString -String $r.Content.authToken -AsPlainText -Force
+                DataSource  = $r.Content.DataSource
+                Credential  = $Credential
+                Hostname    = $Hostname
+                Path        = $GuacamolePath
+                Protocol    = $Protocol
+                BaseURI     = $baseUri
             }
         }
 

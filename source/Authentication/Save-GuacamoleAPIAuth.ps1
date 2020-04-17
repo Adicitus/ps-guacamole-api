@@ -12,6 +12,10 @@ function Save-GuacamoleAPIAuth {
         Password    = $AuthObject.Credential.Password | ConvertFrom-SecureString
         Token       = $AuthObject.Token | ConvertFrom-SecureString
         DataSource  = $AuthObject.DataSource
+        Hostname    = $AuthObject.Hostname
+        Path        = $AuthObject.Path
+        Protocol    = $AuthObject.Protocol
+        BaseURI     = $AuthObject.BaseURI
     }
 
     $p | ConvertTo-Json | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString > $path
