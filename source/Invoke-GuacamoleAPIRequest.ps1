@@ -13,7 +13,7 @@ function Invoke-GuacamoleAPIRequest {
         [Parameter(Mandatory=$false)]
         [hashtable]$Headers,
         [Parameter(Mandatory=$false)]
-        [hashtable]$AuthObject
+        [PSCustomObject]$AuthObject
     )
 
     $reqArgs = @{
@@ -35,7 +35,7 @@ function Invoke-GuacamoleAPIRequest {
         @{}
     }
 
-    if ($PSBoundParameters.ContainsKey("AuthObj")) {
+    if ($PSBoundParameters.ContainsKey("AuthObject")) {
         $params.token = Unlock-SecureString $AuthObject.token
     }
 
@@ -43,6 +43,8 @@ function Invoke-GuacamoleAPIRequest {
         $queryString = ($params.GetEnumerator() | % { "{0}={1}" -f $_.key, $_.value }) -join "&"
         $reqArgs.Uri = "{0}?{1}" -f $Endpoint, $queryString
     } 
+
+    Write-Debug $reqArgs.Uri
 
     $r = try {
         Invoke-WebRequest @reqArgs -UseBasicParsing
@@ -53,7 +55,7 @@ function Invoke-GuacamoleAPIRequest {
     switch ($r.GetType().Name) {
         ErrorRecord {
             if ($r.Exception -is [System.Net.WebException]) {
-                @{
+                [PSCustomObject]@{
                     StatusCode = $r.Exception.Response.StatusCode
                     Exception = $r.Exception
                     Response  = $r.Exception.Response
@@ -63,7 +65,7 @@ function Invoke-GuacamoleAPIRequest {
             }
         }
         default {
-            @{
+            [PSCustomObject]@{
                 Statuscode=$r.statuscode
                 Content=ConvertFrom-UnicodeEscapedString $r.Content | ConvertFrom-Json
             }
