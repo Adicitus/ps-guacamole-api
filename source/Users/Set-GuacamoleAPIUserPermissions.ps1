@@ -1,3 +1,8 @@
+# Found specification of how to update permissions here:
+#    https://stackoverflow.com/questions/60651115/how-can-i-connect-user-with-a-connection-by-using-guacamole-rest-api
+# JSON Patch specification:
+#    https://tools.ietf.org/html/rfc6902#section-4.1
+
 function Set-GuacamoleAPIUserPermissions {
     [CmdletBinding()]
     param(
