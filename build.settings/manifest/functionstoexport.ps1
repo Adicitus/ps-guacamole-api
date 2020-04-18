@@ -7,4 +7,9 @@
     "New-GuacamoleAPIUser"
     "Remove-GuacamoleAPIUser"
     "Set-GuacamoleAPIUser"
+
+    "Get-GuacamoleAPIConnection"
+    "Get-GuacamoleAPIConnectionParameters"
+    "New-GuacamoleAPIRDPConnection"
+    "Remove-GuacamoleAPIConnection"
 )
