@@ -7,6 +7,8 @@
     "New-GuacamoleAPIUser"
     "Remove-GuacamoleAPIUser"
     "Set-GuacamoleAPIUser"
+    "Get-GuacamoleAPIUserPermissions"
+    "Set-GuacamoleAPIUserPermissions"
 
     "Get-GuacamoleAPIConnection"
     "Get-GuacamoleAPIConnectionParameters"
