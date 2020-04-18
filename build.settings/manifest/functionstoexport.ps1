@@ -13,5 +13,6 @@
     "Get-GuacamoleAPIConnection"
     "Get-GuacamoleAPIConnectionParameters"
     "New-GuacamoleAPIRDPConnection"
+    "Set-GuacamoleAPIRDPConnection"
     "Remove-GuacamoleAPIConnection"
 )
