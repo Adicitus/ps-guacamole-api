@@ -46,7 +46,10 @@ function Request-GuacamoleAPIAuth {
     }.GetEnumerator() | % { "{0}={1}" -f $_.Key, [System.web.httpUtility]::UrlEncode($_.value) }
     $body = $body -join "&"
 
+    $calltime = [datetime]::Now
     $r = Invoke-GuacamoleAPIRequest -Method Post -EndPoint $endpoint -Headers $headers -Body $body
+
+    $r.Raw.Content | Write-Debug
 
     switch ($r.statusCode) {
         200 {
@@ -58,6 +61,7 @@ function Request-GuacamoleAPIAuth {
                 Path        = $GuacamolePath
                 Protocol    = $Protocol
                 BaseURI     = $baseUri
+                Expires     = $calltime.AddMinutes(60) # Default api session timeout: https://guacamole.apache.org/doc/gug/configuring-guacamole.html#initial-setup
             }
         }
 

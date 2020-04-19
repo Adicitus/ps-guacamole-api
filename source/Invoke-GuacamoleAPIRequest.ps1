@@ -22,6 +22,7 @@ function Invoke-GuacamoleAPIRequest {
     }
 
     if ($PSBoundParameters.ContainsKey("Body")) {
+        Write-Debug $Body
         $reqArgs.Body = $Body
     }
     
@@ -67,6 +68,7 @@ function Invoke-GuacamoleAPIRequest {
         default {
             $t = @{
                 Statuscode  = $r.statuscode
+                Raw = $r
             }
 
             if ($r.Content) {
