@@ -32,15 +32,15 @@ function New-GuacamoleAPIUser {
     }
 
     if ($PSBoundParameters.ContainsKey("Disabled")) {
-        $attributes.disabled = $Disabled
+        $body.attributes.disabled = $Disabled
     }
 
     if ($PSBoundParameters.ContainsKey("ValidFrom")) {
-        $attributes."valid-from" = "{0:yyyy-MM-dd}" -f $ValidFrom
+        $body.attributes."valid-from" = "{0:yyyy-MM-dd}" -f $ValidFrom
     }
 
     if ($PSBoundParameters.ContainsKey("ValidUntil")) {
-        $attributes."valid-until" = "{0:yyyy-MM-dd}" -f $ValidUntil
+        $body.attributes."valid-until" = "{0:yyyy-MM-dd}" -f $ValidUntil
     }
 
     $jsonBody = $body | ConvertTo-Json | ConvertTo-UnicodeEscapedString
