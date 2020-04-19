@@ -73,7 +73,7 @@ function Invoke-GuacamoleAPIRequest {
             Write-Debug $r.StatusCode
             
             $t = @{
-                Statuscode  = $r.statuscode
+                StatusCode  = [System.Net.HttpStatusCode]$r.statuscode
                 Raw = $r
             }
 

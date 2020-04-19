@@ -128,7 +128,7 @@ function Set-GuacamoleAPIRDPConnection {
 
     $r = Invoke-GuacamoleAPIRequest -AuthObject $AuthObject -Endpoint $endpoint -Method put -Body $jsonBody -Headers $headers
 
-    switch ($r.statusCode) {
+    switch ($r.statusCode.value__) {
         200 {
             $r | Add-Member -MemberType noteproperty -Name Connection -Value $r.Content -PassThru
         }

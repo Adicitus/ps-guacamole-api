@@ -17,7 +17,7 @@ function Get-GuacamoleAPIUser {
 
     $r = Invoke-GuacamoleAPIRequest -AuthObject $authObject -Method "Get" -Endpoint $endPoint 
 
-    switch ($r.StatusCode) {
+    switch ($r.StatusCode.value__) {
         200 {
             if ($PSBoundParameters.ContainsKey("Username")) {
                 $r | Add-Member -MemberType NoteProperty -Name User -Value $r.Content -PassThru

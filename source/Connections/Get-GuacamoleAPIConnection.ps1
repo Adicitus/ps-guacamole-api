@@ -15,7 +15,7 @@ function Get-GuacamoleAPIConnection {
 
     $r = Invoke-GuacamoleAPIRequest -AuthObject $AuthObject -Method get -Endpoint $endpoint
 
-    switch ($r.StatusCode) {
+    switch ($r.StatusCode.value__) {
         200 {
             if ($PSBoundParameters.ContainsKey("Identifier")) {
                 $r | Add-Member -MemberType NoteProperty -Name Connection -Value $r.Content

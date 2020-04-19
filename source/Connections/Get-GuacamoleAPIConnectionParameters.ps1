@@ -12,7 +12,7 @@ function Get-GuacamoleAPIConnectionParameters {
 
     $r = Invoke-GuacamoleAPIRequest -AuthObject $AuthObject -Method get -Endpoint $endpoint
 
-    switch ($r.StatusCode) {
+    switch ($r.StatusCode.value__) {
         200 {
             $r | Add-Member -MemberType NoteProperty -Name Parameters -Value $r.Content -PassThru
         }

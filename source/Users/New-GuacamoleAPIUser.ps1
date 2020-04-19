@@ -49,7 +49,7 @@ function New-GuacamoleAPIUser {
 
     $r = Invoke-GuacamoleAPIRequest -AuthObject $authObject -Method post -Endpoint $endpoint -Body $jsonBody -Headers $headers
 
-    switch ($r.StatusCode) {
+    switch ($r.StatusCode.value__) {
         200 {
             $r | Add-Member -MemberType NoteProperty -Name User -Value $r.Content -PassThru
         }

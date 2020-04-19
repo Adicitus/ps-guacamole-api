@@ -49,7 +49,7 @@ function Set-GuacamoleAPIUserPermissions {
 
     $r = Invoke-GuacamoleAPIRequest -AuthObject $AuthObject -Method Patch -EndPoint $endpoint -Body $jsonBody -Headers $headers
 
-    switch ($r.StatusCode) {
+    switch ($r.StatusCode.value__) {
         200 {
             $r | Add-Member -MemberType noteproperty -Name Permissions -Value $r.Content -PassThru
         }
