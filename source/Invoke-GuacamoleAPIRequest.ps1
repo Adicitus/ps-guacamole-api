@@ -45,7 +45,7 @@ function Invoke-GuacamoleAPIRequest {
         $reqArgs.Uri = "{0}?{1}" -f $Endpoint, $queryString
     } 
 
-    Write-Debug $reqArgs.Uri
+    "{0} {1}" -f $Method.ToUpper(), $reqArgs.Uri | Write-Debug
 
     $r = try {
         Invoke-WebRequest @reqArgs -UseBasicParsing
@@ -56,6 +56,9 @@ function Invoke-GuacamoleAPIRequest {
     switch ($r.GetType().Name) {
         ErrorRecord {
             if ($r.Exception -is [System.Net.WebException]) {
+
+                Write-Debug $r.Exception.Response.StatusCode
+
                 [PSCustomObject]@{
                     StatusCode = $r.Exception.Response.StatusCode
                     Exception = $r.Exception
@@ -66,6 +69,9 @@ function Invoke-GuacamoleAPIRequest {
             }
         }
         default {
+            
+            Write-Debug $r.StatusCode
+            
             $t = @{
                 Statuscode  = $r.statuscode
                 Raw = $r
