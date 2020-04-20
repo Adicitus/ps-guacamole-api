@@ -51,7 +51,7 @@ function Request-GuacamoleAPIAuth {
 
     $r.Raw.Content | Write-Debug
 
-    switch ($r.statusCode) {
+    switch ($r.statusCode.value__) {
         200 {
             [PSCustomObject]@{
                 Token       = ConvertTo-SecureString -String $r.Content.authToken -AsPlainText -Force
