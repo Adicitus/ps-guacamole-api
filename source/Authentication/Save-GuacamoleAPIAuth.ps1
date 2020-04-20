@@ -15,7 +15,7 @@ function Save-GuacamoleAPIAuth {
 
     if ($UseKey) {
         $encryptArgs.Key = if ($PSBoundParameters.ContainsKey("Key")) {
-            $Key
+            [System.Convert]::FromBase64String($key)
         } else {
             $r = [System.Random]::new()
             [byte[]]( 0..31 | % { $r.next(0, 255) } )
