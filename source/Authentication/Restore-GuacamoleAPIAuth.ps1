@@ -25,6 +25,7 @@ function Restore-GuacamoleAPIAuth {
         Path        = $p.Path
         Protocol    = $p.Protocol
         BaseURI     = $p.BaseURI
+        Expires     = $p.Expires
     }
 
 }

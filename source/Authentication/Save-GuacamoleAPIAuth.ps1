@@ -6,14 +6,20 @@ function Save-GuacamoleAPIAuth {
         [parameter(Mandatory=$true)]
         [PSCustomObject]$AuthObject,
         [parameter(Mandatory=$false)]
-        [switch]$UseKey
+        [switch]$UseKey,
+        [parameter(Mandatory=$false)]
+        [string]$Key
     )
 
     $encryptArgs = @{}
 
     if ($UseKey) {
-        $r = [System.Random]::new()
-        $encryptArgs.Key = [byte[]]( 0..31 | % { $r.next(0, 255) } )
+        $encryptArgs.Key = if ($PSBoundParameters.ContainsKey("Key")) {
+            $Key
+        } else {
+            $r = [System.Random]::new()
+            [byte[]]( 0..31 | % { $r.next(0, 255) } )
+        }
     }
 
     $p = @{
@@ -25,6 +31,7 @@ function Save-GuacamoleAPIAuth {
         Path        = $AuthObject.Path
         Protocol    = $AuthObject.Protocol
         BaseURI     = $AuthObject.BaseURI
+        Expires     = $AuthObject.Expires
     }
 
     $p | ConvertTo-Json | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString  @encryptArgs > $path
