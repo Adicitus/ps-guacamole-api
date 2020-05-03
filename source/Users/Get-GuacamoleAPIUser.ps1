@@ -19,11 +19,22 @@ function Get-GuacamoleAPIUser {
 
     switch ($r.StatusCode.value__) {
         200 {
-            if ($PSBoundParameters.ContainsKey("Username")) {
-                $r | Add-Member -MemberType NoteProperty -Name User -Value $r.Content -PassThru
+
+            if ($PSBoundParameters.ContainsKey("Identifier")) {
+                $r | Add-Member -MemberType NoteProperty -Name User -Value $r.Content
             } else {
-                $r | Add-Member -MemberType NoteProperty -Name Users -Value $r.Content -PassThru
+                $users = @{}
+
+                $r.Content | Get-Member -MemberType NoteProperty | % {
+                    $n = $_.name
+                    $users[$n] = $r.Content.$n
+                }
+
+                $r | Add-Member -MemberType NoteProperty -Name Users -Value $users
             }
+
+            $r
+
         }
 
         default {
