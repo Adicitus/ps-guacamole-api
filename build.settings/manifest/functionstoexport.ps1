@@ -15,4 +15,8 @@
     "New-GuacamoleAPIRDPConnection"
     "Set-GuacamoleAPIRDPConnection"
     "Remove-GuacamoleAPIConnection"
+
+    "New-GuacamoleAPISharingProfile"
+    "Get-GuacamoleAPISharingProfile"
+    "Remove-GuacamoleAPISharingProfile"
 )
