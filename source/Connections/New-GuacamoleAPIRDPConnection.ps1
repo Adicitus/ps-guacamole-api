@@ -55,6 +55,28 @@ function New-GuacamoleAPIRDPConnection {
         [int]$MaxConnections=1,
         [Parameter(Mandatory=$false)]
         [int]$MaxConnectionsPerUser=1,
+        
+        # Expected Server-side keyboard layout.
+        # List of supported layouts can be found at:
+        #    https://guacamole.apache.org/doc/gug/configuring-guacamole.html
+        # Under 'Session Settings' -> 'server-layout'.
+        [ValidateSet(
+            "en-us-qwerty",
+            "en-gb-qwerty",
+            "de-ch-qwertz",
+            "de-de-qwertz",
+            "fr-fr-azerty",
+            "fr-ch-qwertz",
+            "it-it-qwerty",
+            "ja-jp-qwerty",
+            "pt-br-qwerty",
+            "es-es-qwerty",
+            "sv-se-qwerty",
+            "tr-tr-qwerty",
+            "failsafe"
+        )]
+        [Parameter(Mandatory=$false, HelpMessage="Expected Server-side keyboard layout.")]
+        [String]$KeyboardLayout="sv-se-qwerty",
         [Parameter(Mandatory=$false)]
         [string]$ParentIdentifier = "ROOT"
     )
@@ -99,6 +121,7 @@ function New-GuacamoleAPIRDPConnection {
         EnableFullwindowDrag = { param($v) $body.parameters."enable-full-window-drag" = $v }
         EnableDesktopComposition = { param($v) $body.parameters."enable-desktop-composition" = $v }
         EnableMenuAnimations = { param($v) $body.parameters."enable-menu-animations" = $v }
+        KeyboardLayout  = { param($v) $body.parameters."server-layout" = $v }
     }
 
     $mapping.keys | ? { $PSBoundParameters.ContainsKey($_) } | % { . $mapping[$_] $PSBoundParameters.$_ }

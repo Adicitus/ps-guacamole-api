@@ -55,6 +55,28 @@ function Set-GuacamoleAPIRDPConnection {
         [int]$MaxConnections=1,
         [Parameter(Mandatory=$false)]
         [int]$MaxConnectionsPerUser=1,
+
+        # Expected Server-side keyboard layout.
+        # List of supported layouts can be found at:
+        #    https://guacamole.apache.org/doc/gug/configuring-guacamole.html
+        # Under 'Session Settings' -> 'server-layout'.
+        [ValidateSet(
+            "en-us-qwerty",
+            "en-gb-qwerty",
+            "de-ch-qwertz",
+            "de-de-qwertz",
+            "fr-fr-azerty",
+            "fr-ch-qwertz",
+            "it-it-qwerty",
+            "ja-jp-qwerty",
+            "pt-br-qwerty",
+            "es-es-qwerty",
+            "sv-se-qwerty",
+            "tr-tr-qwerty",
+            "failsafe"
+        )]
+        [Parameter(Mandatory=$false, HelpMessage="Expected Server-side keyboard layout.")]
+        [String]$KeyboardLayout="sv-se-qwerty",
         [Parameter(Mandatory=$false)]
         [string]$ParentIdentifier = "ROOT"
     )
@@ -116,6 +138,7 @@ function Set-GuacamoleAPIRDPConnection {
         EnableMenuAnimations        = { param($v) $body.parameters."enable-menu-animations" = $v }
         MaxConnections              = { param($v) $body.attributes."max-connections" = $v }
         MaxConnectionsPerUser       = { param($v) $body.attributes."max-connections-per-user" = $v }
+        KeyboardLayout  = { param($v) $body.parameters."server-layout" = $v }
         ParentIdentifier            = { param($v) $body.parentIdentifier = $v }
     }
 
