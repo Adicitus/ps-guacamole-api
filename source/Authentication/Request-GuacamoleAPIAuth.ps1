@@ -43,7 +43,7 @@ function Request-GuacamoleAPIAuth {
     $body = @{
         username = $Credential.UserName
         password = Unlock-SecureString $Credential.Password
-    }.GetEnumerator() | % { "{0}={1}" -f $_.Key, [System.web.httpUtility]::UrlEncode($_.value) }
+    }.GetEnumerator() | % { "{0}={1}" -f $_.Key, [System.net.webUtility]::HtmlEncode($_.value) }
     $body = $body -join "&"
 
     $calltime = [datetime]::Now
