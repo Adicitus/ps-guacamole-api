@@ -22,7 +22,7 @@ function Invoke-GuacamoleAPIRequest {
     }
 
     if ($PSBoundParameters.ContainsKey("Body")) {
-        Write-Debug $Body
+        Write-Debug "$Body"
         $reqArgs.Body = $Body
     }
     
@@ -57,7 +57,7 @@ function Invoke-GuacamoleAPIRequest {
         ErrorRecord {
             if ($r.Exception -is [System.Net.WebException]) {
 
-                Write-Debug $r.Exception.Response.StatusCode
+                "Status code: {0}" -f $r.Exception.Response.StatusCode | Write-Debug
 
                 [PSCustomObject]@{
                     StatusCode = $r.Exception.Response.StatusCode
@@ -70,7 +70,7 @@ function Invoke-GuacamoleAPIRequest {
         }
         default {
             
-            Write-Debug $r.StatusCode
+            "Status code: {0}" -f $r.StatusCode | Write-Debug 
             
             $t = @{
                 StatusCode  = [System.Net.HttpStatusCode]$r.statuscode
