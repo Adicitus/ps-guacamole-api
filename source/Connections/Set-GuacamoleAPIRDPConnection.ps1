@@ -16,7 +16,7 @@ function Set-GuacamoleAPIRDPConnection {
         [ValidateRange(1, 65535)]
         [Parameter(Mandatory=$false)]
         [int]$Port,
-        [ValidateSet("nla", "rdp", "tls")]
+        [ValidateSet("any", "nla", "nla-ext", "rdp", "vmconnect", "tls")]
         [Parameter(Mandatory=$false)]
         [string]$Security="nla",
         [Parameter(Mandatory=$false)]
@@ -35,6 +35,8 @@ function Set-GuacamoleAPIRDPConnection {
         [string]$ResizeMethod="display-update",
         [Parameter(Mandatory=$false)]
         [bool]$IgnoreCertificate=$false,
+        [Parameter(Mandatory=$false)]
+        [bool]$DisableAuth=$false,
         [Parameter(Mandatory=$false)]
         [bool]$EnableWallpaper,
         [Parameter(Mandatory=$false)]
@@ -128,6 +130,7 @@ function Set-GuacamoleAPIRDPConnection {
         GatewayPort     = { param($v) $body.parameters."gateway-port" = $v }
         ResizeMethod    = { param($v) $body.parameters."resize-method" = $v }
         IgnoreCertificate = { param($v) $body.parameters."ignore-cert" = $v }
+        DisableAuth     = { param($v) $body.parameters."disable-auth" = $v }
         EnableWallpaper = { param($v) $body.parameters."enable-wallpaper" = $v }
         DisableAudio    = { param($v) $body.parameters."disable-audio" = $v }
         EnableFontSmoothing = { param($v) $body.parameters."enable-font-smoothing" = $v }
