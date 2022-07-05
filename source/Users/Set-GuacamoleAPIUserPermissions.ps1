@@ -42,8 +42,6 @@ function Set-GuacamoleAPIUserPermissions {
         value = $Permission
     } )
 
-    $body | Out-String | Write-Host
-
     $jsonBody = ConvertTo-json $body | ConvertTo-UnicodeEscapedString
 
 
